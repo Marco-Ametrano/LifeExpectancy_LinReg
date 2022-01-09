@@ -23,7 +23,7 @@ round(cor(aspettativa[, -c(1, 2)]), digits=3)
 cor(as.numeric(aspettativa$Status), aspettativa$Schooling)
 
 
-dataset<-aspettativa[, -c(10, 14)] #eliminate difterite e thinness 10-19
+dataset<-aspettativa[, -c(10, 14)] 
 
 mod_full<-lm(Life.expectancy~Status + Adult.Mortality + GDP + BMI + Hepatitis.B + Polio + Schooling + HIV.AIDS + Measles+ thinness.5.9.years+ Population + under.five.deaths, data = dataset)
 summary(mod_full)
@@ -74,7 +74,7 @@ data[2907, ]
 data[1475, ]
 cook <- cooks.distance(mod_finale)
 summary(cook)
-which.max(cook) #zimbabwe
+which.max(cook) 
 plot(cook)
 identify(cook)
 modello_noleva <- lm(Life.expectancy~ Adult.Mortality +Polio + Schooling + HIV.AIDS, data = dataset[-c(130, 129), ])
