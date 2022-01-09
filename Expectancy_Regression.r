@@ -1,6 +1,5 @@
-data<-read.csv("C:\\Users\\ritag\\Documents\\UNI STATISTICA\\MODELLI LINEARI GENERALIZZATI\\PRIMA PRESENTAZIONE\\Life Expectancy Data.csv", header = T, stringsAsFactors = F)
+#data<-read.csv("C:\\Users\\ritag\\Documents\\UNI STATISTICA\\MODELLI LINEARI GENERALIZZATI\\PRIMA PRESENTAZIONE\\Life Expectancy Data.csv", header = T, stringsAsFactors = F)
 View(data)
-#data <- na.omit(data)
 
 dati<-data[-which(data$Year!=2015), -c(2,6, 7, 8,14, 21)]
 aspettativa<-na.omit(dati)
@@ -22,9 +21,8 @@ curve(dnorm(x, mean = m, sd = std), col="red", add=T)
 round(cor(aspettativa[, -c(1, 2)]), digits=3)
 
 cor(as.numeric(aspettativa$Status), aspettativa$Schooling)
-#correlazione alta tra i due sottopeso, e correlazione alta tra difterite e epatite b
 
-#DATASET FINALE
+
 dataset<-aspettativa[, -c(10, 14)] #eliminate difterite e thinness 10-19
 
 mod_full<-lm(Life.expectancy~Status + Adult.Mortality + GDP + BMI + Hepatitis.B + Polio + Schooling + HIV.AIDS + Measles+ thinness.5.9.years+ Population + under.five.deaths, data = dataset)
@@ -40,9 +38,9 @@ formula <- Life.expectancy~Status + Adult.Mortality + GDP + BMI + Hepatitis.B + 
 
 modsub=regsubsets(formula,data=dataset, nbest = 1, nvmax = NULL, force.in = NULL, force.out = NULL, method = "exhaustive")
 best.sub=summary(modsub)
-# Criterio BIC rispetto al numero delle variabili esplicative
+# BIC
 plot(-best.sub$bic,pch=19,cex=1.5,type="b",las=1,col="dodgerblue", xlab = "")
-# Selezione ottimale delle variabili esplicative
+# Variable selection
 plot(modsub,scale="bic",las=1,col="dodgerblue")
 plot(modsub, scale = "adjr2", las=1, col="pink")
 
@@ -113,4 +111,3 @@ mod_full1<-lm(Life.expectancy~Status + Adult.Mortality + GDP + BMI + Hepatitis.B
                 Population + under.five.deaths + status_adultmort + status_gdp + status_BMI + status_hepatitis + status_polio
               + status_schooling + status_hiv + status_measles + status_thinness + status_pop + status_underfive, data = dataset)
 summary(mod_full1)
-best_mod<-lm(Life.expectancy~Adult.Mortality+Polio+Schooling+HIV.AIDS, data=dataset)
